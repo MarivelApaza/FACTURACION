@@ -51,7 +51,7 @@ class UsuarioController {
     public function guardar() {
         $datos = array(
             'nomusuario' => $_POST["nomusuario"],
-            'password' => $_POST["password"],
+            'password' => sha1($_POST["password"]),
             'apellidos' => $_POST["apellidos"],
             'nombres' => $_POST["nombres"],
             'email' => $_POST["email"],
@@ -71,7 +71,7 @@ class UsuarioController {
     public function actualizar() {
         $datos = array(
             'nomusuario' => $_POST["nomusuario"],
-            'password' => $_POST["password"],
+            'password' => sha1($_POST["password"]),
             'apellidos' => $_POST["apellidos"],
             'nombres' => $_POST["nombres"],
             'email' => $_POST["email"],

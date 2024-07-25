@@ -6,6 +6,7 @@ require_once ROOT_PATH."models/modeloProducto.php";
 require_once ROOT_PATH."models/modeloProveedor.php";
 require_once ROOT_PATH."models/modeloCategoria.php";
 require_once ROOT_PATH."models/modeloCliente.php";
+require_once ROOT_PATH."models/modeloVenta.php";
 
 require_once 'routes/cargar_rutas.php';
 

@@ -112,7 +112,7 @@ if(session_status() == PHP_SESSION_NONE){
                     data-parent="#accordionSidebar">
                     <div class="py-2 collapse-inner rounded bg-custom-inner">
                         
-                        <a class="collapse-item" href="utilities-color.html">Registro Ventas</a>
+                        <a class="collapse-item" href="index.php?c=venta">Registro Ventas</a>
                         
                     </div>
                 </div>
@@ -128,9 +128,11 @@ if(session_status() == PHP_SESSION_NONE){
                 <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                 <div class="py-2 collapse-inner rounded bg-custom-inner">
                        
-                        <a class="collapse-item" href="login.html">Ventas</a>
-                        <a class="collapse-item" href="register.html">Register</a>
-                        <a class="collapse-item" href="forgot-password.html">Forgot Password</a>
+                        <a class="collapse-item" href="index.php?c=venta&a=consultaPorFechaDia">Por Fecha y Día</a>
+                        <a class="collapse-item" href="index.php?c=cliente&a=consultaPorCliente">Por Clientes</a>
+                        <a class="collapse-item" href="index.php?c=venta&a=consultaPorProducto">Por Productos</a>
+                        <a class="collapse-item" href="index.php?c=venta&a=rankingVenta">Ranking de Ventas</a>
+                        <a class="collapse-item" href="index.php?c=producto&a=stockProductos">Stock Productos</a>
                         <div class="collapse-divider"></div>
                     </div>
                 </div>
@@ -177,7 +179,8 @@ if(session_status() == PHP_SESSION_NONE){
             <li class="nav-item dropdown no-arrow">
                 <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <span class="mr-2 d-none d-lg-inline" style="color: #ffffff;"><?php echo $_SESSION["nombre"]; ?></span>
+                    <span class="mr-2 d-none d-lg-inline" style="color: #ffffff;">
+                        <?php echo $_SESSION["nombre"]; ?></span>
                     <img class="img-profile rounded-circle"
                         src="assets/img/undraw_profile.svg">
                 </a>

@@ -1,5 +1,4 @@
 <?php
-
 require_once ROOT_PATH . "models/modeloProducto.php";
 
 class ProductoController {
@@ -8,6 +7,12 @@ class ProductoController {
 
     public function __construct() {
         $this->modelo = new ModeloProducto();
+    }
+
+    public function getProductoById() {
+        $idProducto = $_POST['idProducto'];
+        $producto = $this->modelo->getProductoById($idProducto);
+        echo json_encode($producto);
     }
 
     public function index() {
@@ -59,6 +64,11 @@ class ProductoController {
     public function borrar($id) {
             $this->modelo->borraProducto($id);
             $this->index();
+    }
+
+    public function stockProductos(){
+        $datos = $this->modelo->obtenerStockProductos();
+        require_once ROOT_PATH."views/producto/stockproducto.php";
     }
 }
 

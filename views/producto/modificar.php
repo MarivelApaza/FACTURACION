@@ -41,7 +41,7 @@ require_once ROOT_PATH . "views/layout/header.php";
                         <option value="0">Seleccione Categoria</option>
                         <?php
                         $ocat = new ModeloCategoria;
-                        $datocat = $ocat->listaCategorias();
+                        $datocat = $ocat->listaCategoria();
                         foreach ($datocat as $filacat) {
                             $selcat = ($filacat['idcategoria'] == $datos['idcategoria']) ? "selected" : "";
                             echo "<option $selcat value='" . $filacat["idcategoria"] . "'>" . $filacat["nomcategoria"] . "</option>";
@@ -55,7 +55,7 @@ require_once ROOT_PATH . "views/layout/header.php";
                         <option value="0">Seleccione Proveedor</option>
                         <?php
                         $oprov = new ModeloProveedor;
-                        $datoprov = $oprov->listaProveedores();
+                        $datoprov = $oprov->listaProveedor();
                         foreach ($datoprov as $filaprov) {
                             $selprov = ($filaprov['idproveedor'] == $datos['idproveedor']) ? "selected" : "";
                             echo "<option $selprov value='" . $filaprov["idproveedor"] . "'>" . $filaprov["nomproveedor"] . "</option>";
@@ -65,7 +65,11 @@ require_once ROOT_PATH . "views/layout/header.php";
                 </div>
                 <div class="form-group">
                     <label for="estado">Estado</label>
-                    <input type="text" class="form-control" name="estado" value="<?php echo $datos['estado']; ?>">
+                    <select class="form-control" name="estado" id="estado">
+                        <option value="">Seleccione un estado</option>
+                        <option value="A" <?php if ($datos['estado'] == 'A') echo 'selected'; ?>>A</option>
+                        <option value="I" <?php if ($datos['estado'] == 'I') echo 'selected'; ?>>I</option>
+                    </select>
                 </div>
                 <input class="btn btn-primary" type="submit" value="Guardar Cambios" style="background-color: #973A5C; border-color: #973A5C;">
                 <a class="btn btn-secondary" href="?c=producto&a=index">Cancelar</a>

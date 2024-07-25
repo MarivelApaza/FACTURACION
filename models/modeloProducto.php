@@ -1,6 +1,7 @@
 <?php
 
 require_once ROOT_PATH . "libs/conexion.php";
+require_once ROOT_PATH."controllers/ventaController.php";
 
 class ModeloProducto {
 
@@ -14,7 +15,24 @@ class ModeloProducto {
             die($e->getMessage());
         }
     }
-
+    
+    public function getProductoById($idProducto) {
+        try {
+            $query = $this->con->prepare("
+                SELECT cosuni, preuni 
+                FROM productos
+                WHERE idproducto = :idproducto
+            ");
+            $query->bindParam(":idproducto", $idProducto);
+            $query->execute();
+            return $query->fetch(PDO::FETCH_ASSOC);
+        } catch (Exception $e) {
+            die('Error: ' . $e->getMessage());
+        } finally {
+            $res = null;
+        }
+    }
+    
     public function listaProductos() {
         try {
             $lista = $this->con->prepare("SELECT * FROM productos");
@@ -110,4 +128,31 @@ class ModeloProducto {
             $res = null;
         }
     }
+
+    public function obtenerStockProductos() {
+        try {
+            $consulta = $this->con->prepare("
+                SELECT 
+                    p.idproducto, 
+                    p.nomproducto AS nombre_producto, 
+                    p.stock AS stock_disponible, 
+                    p.preuni AS precio_unitario, 
+                    p.cosuni AS costo_unitario
+                FROM 
+                    productos p
+                ORDER BY 
+                    p.nomproducto ASC
+            ");
+            $consulta->execute();
+            $resultados = $consulta->fetchAll(PDO::FETCH_ASSOC);
+            return $resultados;
+        } catch (Exception $e) {
+            die('Error: ' . $e->getMessage());
+        } finally {
+            $consulta = null;
+            $resultados = null;
+        }
+    }
+    
+    
 }

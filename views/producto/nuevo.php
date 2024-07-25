@@ -1,5 +1,8 @@
 <?php
+require_once ROOT_PATH . "libs/conexion.php";
 require_once ROOT_PATH."views/layout/header.php";
+require_once ROOT_PATH . "models/modeloCategoria.php";
+require_once ROOT_PATH . "models/modeloProveedor.php";
  ?>
 
   <!-- Begin Page Content -->
@@ -15,60 +18,63 @@ require_once ROOT_PATH."views/layout/header.php";
     <div class="card-body shadow" style="background-color: #FDDDDF;">
 
     
-      <form method="post" action="?c=producto&a=guardar">
-          <div class="form-group">
-            <label for="descripcion">Nombre Producto</label>
-            <input type="text" class="form-control" name="nomprodu" required>
-          </div>
-          <div class="form-group">
-            <label for="unidad">Unidad de Medida</label>
-            <input type="text" class="form-control" name="unimed" required>
-          </div>
-          <div class="form-group">
-            <label for="stock">Stock</label>
-            <input type="text" class="form-control" name="stock" required>
-          </div>
-          <div class="form-group">
-            <label for="costo">Precio Unitario</label>
-            <input type="text" class="form-control" name="cosuni" required>
-          </div>
-          <div class="form-group">
-            <label for="precio">Costo Unitario</label>
-            <input type="text" class="form-control" name="preuni" required>
-          </div>
-          <div class="form-group">
-            <label for="cbocategoria">Categoria</label>
-            <select class="form-control" name="categoria" required>
-             <option value="0">Seleccione Categoria</option> 
-            <?php
-              $ocat = new ModeloCategoria;
-              $datocat = $ocat->listaCategorias();
-              foreach($datocat as $filacat) {
-                echo "<option value='".$filacat["idcategoria"]."'>".$filacat["nomcategoria"]."</option>";
-              } 
-              ?>
-              </select>
-
-          </div>
-          <div class="form-group">
-            <label for="cboproveedor">Proveedor</label>
-            <select class="form-control" name="proveedor" required>
-            <option value="0">Seleccione Proveedor</option> 
-            <?php
+    <form action="?c=producto&a=guardar" method="post">
+       <div class="form-group">
+         <label for="nomprodu">Nombre Producto</label>
+           <input type="text" class="form-control" id="nomprodu" name="nomprodu" required>
+        </div>
+        <div class="form-group">
+          <label for="unimed">Unidad de Medida</label>
+          <input type="text" class="form-control" id="unimed" name="unimed" required>
+        </div>
+        <div class="form-group">
+          <label for="stock">Stock</label>
+          <input type="number" class="form-control" id="stock" name="stock" required>
+        </div>
+        <div class="form-group">
+          <label for="cosuni">Costo Unitario</label>
+          <input type="number" class="form-control" id="cosuni" name="cosuni" step="0.01" required>
+        </div>
+        <div class="form-group">
+          <label for="preuni">Precio Unitario</label>
+          <input type="number" class="form-control" id="preuni" name="preuni" step="0.01" required>
+        </div>
+        <div class="form-group">
+          <label for="categoria">Categoría</label>
+          <select class="form-control" id="categoria" name="categoria" required>
+          <option value="">Seleccione una categoría</option>
+          <?php
+            $ocat = new ModeloCategoria();
+            $datocat = $ocat->listaCategoria();
+            foreach ($datocat as $filacat) {
+              echo "<option value='" . $filacat["idcategoria"] . "'>" . $filacat["nomcategoria"] . "</option>";
+            }
+            ?>
+        </select>
+        </div>
+        <div class="form-group">
+          <label for="proveedor">Proveedor</label>
+          <select class="form-control" id="proveedor" name="proveedor" required>
+          <option value="">Seleccione un proveedor</option>
+          <?php
               $oprov = new ModeloProveedor;
-              $datoprov = $oprov->listaProveedores();
+              $datoprov = $oprov->listaProveedor();
               foreach($datoprov as $filaprov) {
                 echo "<option value='".$filaprov["idproveedor"]."'>".$filaprov["nomproveedor"]."</option>";
               } 
-              ?>
-            </select>
-            <div class="form-group">
-            <label for="precio">Estado</label>
-            <input type="text" class="form-control" name="preuni" required>
-          </div>
-          </div>
-          <input class="btn btn-primary" type="submit" value="Guardar Cambios" style="background-color: #973A5C; border-color: #973A5C;">
-          <a class="btn btn-secondary" href="?c=producto&a=index">Cancelar</a>
+          ?>
+         </select>
+        </div>
+         <div class="form-group">
+          <label for="estado">Estado</label>
+          <select class="form-control" id="estado" name="estado" required>
+          <option value="">Seleccione un estado</option>
+          <option value="A">A</option>
+          <option value="I">I</option>
+        </select>
+        </div>
+            <input class="btn btn-primary" type="submit" value="Guardar" style="background-color: #973A5C; border-color: #973A5C;">
+            <a class="btn btn-secondary" href="?c=producto&a=index">Cancelar</a>
         </form>
       </div>
     </div>

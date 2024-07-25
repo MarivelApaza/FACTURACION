@@ -58,4 +58,11 @@ class ClienteController {
         $this->modelo->borraCliente($id);
         $this->index();
     }
+
+    public function consultaPorCliente(){
+        $datos = $this->modelo->obtenerConsultasPorCliente();
+        require_once ROOT_PATH."views/cliente/consultacliente.php";
+    }
+
+
 }

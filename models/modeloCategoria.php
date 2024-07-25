@@ -17,7 +17,7 @@ class ModeloCategoria {
 
     public function listaCategoria() {
         try {
-            $lista = $this->con->prepare("SELECT * FROM categorias");
+            $lista = $this->con->prepare("SELECT  idcategoria, nomcategoria FROM categorias");
             $lista->execute();
             $res = $lista->fetchAll(PDO::FETCH_ASSOC);
             return $res;

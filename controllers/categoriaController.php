@@ -1,6 +1,6 @@
 <?php
 
-require_once ROOT_PATH . "models/modeloCliente.php";
+require_once ROOT_PATH . "models/modeloCategoria.php";
 
 class CategoriaController {
 

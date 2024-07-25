@@ -37,9 +37,13 @@ require_once ROOT_PATH."views/layout/header.php";
             <input type="text" class="form-control" name="email" required>
           </div>
           <div class="form-group">
-            <label for="estado">Estado</label>
-            <input type="text" class="form-control" name="estado" required>
-          </div>
+          <label for="estado">Estado</label>
+          <select class="form-control" id="estado" name="estado" required>
+          <option value="">Seleccione un estado</option>
+          <option value="A">A</option>
+          <option value="I">I</option>
+        </select>
+        </div>
           <input class="btn btn-primary" type="submit" value="Guardar" style="background-color: #973A5C; border-color: #973A5C;">
           <a class="btn btn-secondary" href="?c=usuario&a=index">Cancelar</a>
         </form>

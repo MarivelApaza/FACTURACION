@@ -19,14 +19,14 @@ require_once "views/layout/header.php";
             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                 <thead>
                     <tr>
-                        <th>ID</th>
-                        <th>Nombre de Usuario</th>
-                        <th>Password</th>
-                        <th>Apellidos</th>
-                        <th>Nombres</th>
-                        <th>Email</th>
-                        <th>Estado</th>
-                        <th>Acciones</th>
+                        <th style=" color: black; background-color: #F8C29B;">ID</th>
+                        <th style=" color: black; background-color: #F8C29B;">Nombre de Usuario</th>
+                        <th style=" color: black; background-color: #F8C29B;">Password</th>
+                        <th style=" color: black; background-color: #F8C29B;">Apellidos</th>
+                        <th style=" color: black; background-color: #F8C29B;">Nombres</th>
+                        <th style=" color: black; background-color: #F8C29B;">Email</th>
+                        <th style=" color: black; background-color: #F8C29B;">Estado</th>
+                        <th style=" color: black; background-color: #F8C29B;">Acciones</th>
                     </tr>
                 </thead>
 

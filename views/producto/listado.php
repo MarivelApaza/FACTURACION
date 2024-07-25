@@ -19,14 +19,14 @@ require_once "views/layout/header.php";
             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                 <thead>
                     <tr>
-                        <th>ID</th>
-                        <th>Nombre</th>
-                        <th>Unidad</th>
-                        <th>Stock</th>
-                        <th>Precio</th>
-                        <th>Costo</th>
-                        <th>Estado</th>
-                        <th>Acciones</th>
+                        <th style=" color: black; background-color: #F8C29B;">ID</th>
+                        <th style=" color: black; background-color: #F8C29B;">Nombre</th>
+                        <th style=" color: black; background-color: #F8C29B;">Unidad</th>
+                        <th style=" color: black; background-color: #F8C29B;">Stock</th>
+                        <th style=" color: black; background-color: #F8C29B;">Precio</th>
+                        <th style=" color: black; background-color: #F8C29B;">Costo</th>
+                        <th style=" color: black; background-color: #F8C29B;">Estado</th>
+                        <th style=" color: black; background-color: #F8C29B;">Acciones</th>
                     </tr>
                 </thead>
 

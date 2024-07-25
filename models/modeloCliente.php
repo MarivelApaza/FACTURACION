@@ -102,4 +102,25 @@ class ModeloCliente {
             $res = null;
         }
     }
+
+
+    public function obtenerConsultasPorCliente() {
+        try {
+            $consulta = $this->con->prepare("
+                SELECT c.idcliente, c.nomcliente, SUM(f.valorventa) AS valorventa
+                FROM facturas f
+                JOIN clientes c ON f.idcliente = c.idcliente
+                GROUP BY c.idcliente, c.nomcliente
+                ORDER BY valorventa DESC
+            ");
+            $consulta->execute();
+            $resultados = $consulta->fetchAll(PDO::FETCH_ASSOC);
+            return $resultados;
+        } catch (Exception $e) {
+            die('Error: ' . $e->getMessage());
+        } finally {
+            $consulta = null;
+            $resultados = null;
+        }
+    }
 }

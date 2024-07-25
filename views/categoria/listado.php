@@ -19,8 +19,9 @@ require_once "views/layout/header.php";
             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                 <thead>
                     <tr>
-                        <th>ID</th>
-                        <th>Nombre Categoria</th>
+                        <th style=" color: black; background-color: #F8C29B;">ID</th>
+                        <th style=" color: black; background-color: #F8C29B;">Nombre Categoria</th>
+                        <th style=" color: black; background-color: #F8C29B;">Acciones</th>
                     </tr>
                 </thead>
 

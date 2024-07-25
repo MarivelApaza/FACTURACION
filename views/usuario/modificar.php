@@ -39,10 +39,13 @@ require_once ROOT_PATH."views/layout/header.php";
             <input type="email" class="form-control" name="email" value="<?php echo $datos['email']; ?>">
           </div>
           <div class="form-group">
-            <label for="estado">Estado</label>
-            <input type="text" class="form-control" name="estado" value="<?php echo $datos['estado']; ?>">
-          </div>
-          
+                    <label for="estado">Estado</label>
+                    <select class="form-control" name="estado" id="estado">
+                        <option value="">Seleccione un estado</option>
+                        <option value="A" <?php if ($datos['estado'] == 'A') echo 'selected'; ?>>A</option>
+                        <option value="I" <?php if ($datos['estado'] == 'I') echo 'selected'; ?>>I</option>
+                    </select>
+                </div>
           <input class="btn btn-primary" type="submit" value="Guardar" style="background-color: #973A5C; border-color: #973A5C;">
           <a class="btn btn-secondary" href="?c=usuario&a=index">Cancelar</a>
         </form>
