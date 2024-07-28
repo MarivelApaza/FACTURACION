@@ -59,10 +59,22 @@ class ClienteController {
         $this->index();
     }
 
-    public function consultaPorCliente(){
-        $datos = $this->modelo->obtenerConsultasPorCliente();
-        require_once ROOT_PATH."views/cliente/consultacliente.php";
+    public function consultaPorCliente() {
+        $datos = [];
+        
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            if (isset($_POST['action']) && $_POST['action'] == 'obtener' && isset($_POST['nomcli'])) {
+                $nombre_cliente = $_POST['nomcli'];
+                $datos = $this->modelo->obtenerConsultasPorCliente($nombre_cliente);
+            } elseif (isset($_POST['action']) && $_POST['action'] == 'mostrar_todos') {
+                $datos = $this->modelo->obtenerConsultasPorCliente(); 
+            }
+        } else {
+            $datos = $this->modelo->obtenerConsultasPorCliente();
+        }
+        
+        require_once ROOT_PATH . "views/cliente/consultacliente.php";
     }
-
+    
 
 }

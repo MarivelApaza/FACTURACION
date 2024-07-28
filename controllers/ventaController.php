@@ -33,18 +33,15 @@ class VentaController {
         $condicion_pago = $_POST['condicion_pago'];
         $productos_json = isset($_POST['productos']) ? $_POST['productos'] : '';
     
-        // Verificar si productos_json no está vacío
+        
         if (empty($productos_json)) {
             die('No se ha proporcionado información de productos.');
         }
     
-        // Decodificar el JSON
-        $productos = json_decode($productos_json, true);
+        $productos = json_decode($productos_json, true); //DECODIFICA JSON
     
-        // Aquí deberías agregar el código para insertar la venta en la base de datos
         $venta_id = $this->modelo->insertarVenta($fecha_actual, $fecha_registrada, $idcliente, $idusuario, $igv, $valorventa, $condicion_pago);
     
-        // Insertar detalles de la venta
         foreach ($productos as $producto) {
             $id_producto = $producto['id'];
             $cantidad = $producto['cantidad'];
@@ -54,18 +51,9 @@ class VentaController {
             $this->modelo->insertarDetalleFactura($venta_id, $id_producto, $cantidad, $precio, $costo);
 
             }
-
-    // Disminuir el stock de los productos vendidos
     $this->modelo->disminuirStockVenta($venta_id);
-    
-    
-        // Redirigir o mostrar un mensaje de éxito
         header('Location: ?c=venta&a=index');
     }
-    
-
-
-    
     
 
     public function editar($id) {
@@ -93,27 +81,43 @@ class VentaController {
 
 
     public function borrar($id) {
-        // Aumentar el stock para los productos de la venta eliminada
         $this->modelo->aumentarStockVenta($id);
-    
-        // Eliminar la venta
         $this->modelo->borraVenta($id);
-    
-        // Redirigir a la lista de ventas
         $this->index();
     }
     
-    
-    
-    public function consultaPorProducto(){
-        $datos = $this->modelo->obtenerConsultasPorProducto();
+      
+    public function consultaPorProducto() {
+        $datos = [];
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            if (isset($_POST['nombre_producto']) && !empty($_POST['nombre_producto'])) {
+                $nombre_producto = $_POST['nombre_producto'];
+                $datos = $this->modelo->obtenerConsultasPorProducto($nombre_producto);
+            } elseif (isset($_POST['action']) && $_POST['action'] === 'mostrar_todos') {
+                $datos = $this->modelo->obtenerConsultasPorProducto(); 
+            }
+        } else {
+            $datos = $this->modelo->obtenerConsultasPorProducto(); 
+        }
         require_once ROOT_PATH."views/venta/consultaproducto.php";
     }
+    
 
-    public function consultaPorFechaDia(){
-        $datos = $this->modelo->obtenerVentasPorFechaYDia();
-        require_once ROOT_PATH."views/venta/consultafechadia.php";
+    public function consultaPorFechaDia() {
+        $datos = [];
+        
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            if (isset($_POST['action']) && $_POST['action'] == 'obtener' && isset($_POST['fecha'])) {
+                $fecha = $_POST['fecha'];
+                $datos = $this->modelo->obtenerVentasPorFechaYDia($fecha);
+            } elseif (isset($_POST['action']) && $_POST['action'] == 'mostrar_todas') {
+                $datos = $this->modelo->obtenerTodasLasVentas();
+            }
+        }
+        
+        require_once ROOT_PATH . "views/venta/consultafechadia.php";
     }
+    
 
     public function rankingVenta(){
         $datos = $this->modelo->obtenerRankingVentas();

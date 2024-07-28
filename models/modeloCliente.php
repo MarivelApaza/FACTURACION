@@ -104,15 +104,30 @@ class ModeloCliente {
     }
 
 
-    public function obtenerConsultasPorCliente() {
+    public function obtenerConsultasPorCliente($nombre_cliente = null) {
         try {
-            $consulta = $this->con->prepare("
+            $sql = "
                 SELECT c.idcliente, c.nomcliente, SUM(f.valorventa) AS valorventa
                 FROM facturas f
                 JOIN clientes c ON f.idcliente = c.idcliente
+            ";
+            
+            if ($nombre_cliente) {
+                $sql .= " WHERE c.nomcliente LIKE :nomcli";
+            }
+            
+            $sql .= "
                 GROUP BY c.idcliente, c.nomcliente
                 ORDER BY valorventa DESC
-            ");
+            ";
+            
+            $consulta = $this->con->prepare($sql);
+            
+            if ($nombre_cliente) {
+                $nombre_cliente = "%$nombre_cliente%";
+                $consulta->bindParam(':nomcli', $nombre_cliente);
+            }
+            
             $consulta->execute();
             $resultados = $consulta->fetchAll(PDO::FETCH_ASSOC);
             return $resultados;
@@ -123,4 +138,5 @@ class ModeloCliente {
             $resultados = null;
         }
     }
+    
 }

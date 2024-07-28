@@ -92,7 +92,6 @@ require_once ROOT_PATH . "models/modeloCondicion.php";
                     </div>
                 </div>
 
-                <!-- Subtotal, IGV, Condición de Pago y Total -->
                 <div class="row mb-3">
                     <div class="col-sm-4">
                         <label for="subtotal">Subtotal:</label>
@@ -184,11 +183,11 @@ require_once ROOT_PATH . "models/modeloCondicion.php";
         </div>
     </div>
 
-    <!-- Div for Printable Invoice -->
+                            <!-- -->
+
     <div id="printableArea" style="display:none;">
         <h1>INNOVART</h1>
         <h3>Factura</h3>
-        <!-- Here you can duplicate the structure of the form you want to print -->
         <div>
             <label>Fecha Actual:</label> <span id="printFechaActual"></span><br>
             <label>Fecha Registrada:</label> <span id="printFechaRegistrada"></span><br>
@@ -205,7 +204,7 @@ require_once ROOT_PATH . "models/modeloCondicion.php";
                     </tr>
                 </thead>
                 <tbody>
-                    <!-- Aquí se agregarán las filas de productos -->
+
                 </tbody>
             </table>
             <label>Subtotal:</label> <span id="printSubtotal"></span><br>
@@ -215,7 +214,6 @@ require_once ROOT_PATH . "models/modeloCondicion.php";
         </div>
     </div>
 
-    <!-- /.container-fluid -->
 </div>
 
 <script>

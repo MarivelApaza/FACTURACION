@@ -14,7 +14,6 @@ class ModeloVenta {
         }
     }
 
-    // En tu modelo de Venta
 public function insertarVenta($fecha_actual, $fecha_registrada, $idcliente, $idusuario, $igv, $valorventa, $condicion_pago) {
     $query = "INSERT INTO facturas (fecha, fechareg, idcliente, idusuario, igv, valorventa, idcondicion) VALUES (:fecha_actual, :fecha_registrada, :idcliente, :idusuario, :igv, :valorventa, :condicion_pago)";
     $stmt = $this->con->prepare($query);
@@ -27,7 +26,7 @@ public function insertarVenta($fecha_actual, $fecha_registrada, $idcliente, $idu
     $stmt->bindParam(':condicion_pago', $condicion_pago);
     $stmt->execute();
 
-    return $this->con->lastInsertId(); // Devuelve el ID de la venta recién insertada
+    return $this->con->lastInsertId();
 }
 
 public function obtenerIdProductoPorNombre($nombreProducto) {
@@ -41,7 +40,6 @@ public function obtenerIdProductoPorNombre($nombreProducto) {
 }
 
 public function insertarDetalleFactura($venta_id, $nombre_producto, $cantidad, $precio, $costo) {
-    // Obtener el ID del producto a partir del nombre
     $id_producto = $this->obtenerIdProductoPorNombre($nombre_producto);
 
     if ($id_producto === null) {
@@ -79,18 +77,15 @@ public function disminuirStockVenta($venta_id) {
 }
 
 
-
-
 public function aumentarStockVenta($venta_id) {
     try {
-        // Obtener todos los detalles de la venta
+
         $query = "SELECT idproducto, cant FROM detallefactura WHERE idfactura = :venta_id";
         $stmt = $this->con->prepare($query);
         $stmt->bindParam(':venta_id', $venta_id);
         $stmt->execute();
         $detalles = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-        // Aumentar el stock para cada producto
         foreach ($detalles as $detalle) {
             $idProducto = $detalle['idproducto'];
             $cantidadVendida = $detalle['cant'];
@@ -109,7 +104,6 @@ public function modificarStock($idProducto, $cantidad) {
         $stmt->execute();
         $stockActual = $stmt->fetchColumn();
 
-        // Verificar el stock actual
         if ($stockActual === false) {
             throw new Exception("Producto no encontrado.");
         }
@@ -126,7 +120,6 @@ public function modificarStock($idProducto, $cantidad) {
         $stmt->bindParam(':idProducto', $idProducto);
         $stmt->execute();
 
-        // Verificar que la actualización fue exitosa
         if ($stmt->rowCount() === 0) {
             throw new Exception("No se actualizó el stock del producto.");
         }
@@ -137,19 +130,15 @@ public function modificarStock($idProducto, $cantidad) {
 
 
 
-
-
 public function borraVenta($id) {
     try {
         $this->con->beginTransaction();
         
-        // Eliminar los detalles de la venta
         $query = "DELETE FROM detallefactura WHERE idfactura = :id";
         $stmt = $this->con->prepare($query);
         $stmt->bindParam(':id', $id);
         $stmt->execute();
 
-        // Eliminar la venta
         $query = "DELETE FROM facturas WHERE idfactura = :id";
         $stmt = $this->con->prepare($query);
         $stmt->bindParam(':id', $id);
@@ -214,7 +203,7 @@ public function borraVenta($id) {
         $stmt->bindParam(':igv', $igv);
         $stmt->bindParam(':valorventa', $total);
         $stmt->execute();
-        return $this->con->lastInsertId(); // Devuelve el ID de la última factura insertada
+        return $this->con->lastInsertId(); 
     }
 
     public function actualizarVenta($data) {
@@ -248,10 +237,9 @@ public function borraVenta($id) {
     }
 
 
-
-    public function obtenerConsultasPorProducto() {
+    public function obtenerConsultasPorProducto($nombre_producto = null) {
         try {
-            $consulta = $this->con->prepare("
+            $sql = "
                 SELECT 
                     p.idproducto, 
                     p.nomproducto, 
@@ -263,6 +251,13 @@ public function borraVenta($id) {
                     productos p
                 LEFT JOIN 
                     detallefactura df ON p.idproducto = df.idproducto
+            ";
+    
+            if ($nombre_producto) {
+                $sql .= " WHERE p.nomproducto LIKE :nombre_producto";
+            }
+    
+            $sql .= "
                 GROUP BY 
                     p.idproducto, 
                     p.nomproducto, 
@@ -270,7 +265,45 @@ public function borraVenta($id) {
                     p.cosuni
                 ORDER BY 
                     valorventa DESC
+            ";
+    
+            $consulta = $this->con->prepare($sql);
+    
+            if ($nombre_producto) {
+                $nombre_producto = '%' . $nombre_producto . '%'; // Buscar 
+                $consulta->bindParam(':nombre_producto', $nombre_producto);
+            }
+    
+            $consulta->execute();
+            $resultados = $consulta->fetchAll(PDO::FETCH_ASSOC);
+            return $resultados;
+        } catch (Exception $e) {
+            die('Error: ' . $e->getMessage());
+        } finally {
+            $consulta = null;
+            $resultados = null;
+        }
+    }
+         
+
+    public function obtenerVentasPorFechaYDia($fecha) {
+        try {
+            $consulta = $this->con->prepare("
+                SELECT 
+                    DATE(f.fecha) AS fecha, 
+                    DAYOFWEEK(f.fecha) AS dia_semana, 
+                    SUM(f.valorventa) AS total_venta
+                FROM 
+                    facturas f
+                WHERE 
+                    DATE(f.fecha) = :fecha
+                GROUP BY 
+                    DATE(f.fecha), 
+                    DAYOFWEEK(f.fecha)
+                ORDER BY 
+                    DATE(f.fecha) ASC
             ");
+            $consulta->bindParam(':fecha', $fecha);
             $consulta->execute();
             $resultados = $consulta->fetchAll(PDO::FETCH_ASSOC);
             return $resultados;
@@ -282,9 +315,7 @@ public function borraVenta($id) {
         }
     }
     
-    
-
-    public function obtenerVentasPorFechaYDia() {
+    public function obtenerTodasLasVentas() {
         try {
             $consulta = $this->con->prepare("
                 SELECT 
@@ -308,7 +339,8 @@ public function borraVenta($id) {
             $consulta = null;
             $resultados = null;
         }
-    }
+    }    
+    
     
 
     public function obtenerRankingVentas() {

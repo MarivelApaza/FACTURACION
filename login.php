@@ -19,36 +19,36 @@
 
     <style>
         .bg {
-            background-image: url('assets/img/fondo1.jpg'); /* Cambia esto a la ruta de tu imagen */
-            background-size: cover; /* Ajusta el tamaño de la imagen para que cubra todo el fondo */
-            background-repeat: no-repeat; /* Evita que la imagen se repita */
-            background-position: center; /* Centra la imagen en el fondo */
-            height: 100vh; /* Asegura que el fondo cubra toda la altura de la pantalla */
-            display: flex; /* Usa flexbox para centrar el contenido */
-            justify-content: center; /* Centra el contenido horizontalmente */
-            align-items: center; /* Centra el contenido verticalmente */
+            background-image: url('assets/img/fondo1.jpg'); 
+            background-size: cover; 
+            background-repeat: no-repeat;
+            background-position: center; 
+            height: 100vh; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
         }
 
         .card {
-            background-color: #F9EDFF; /* Cambia el color de fondo del formulario */
+            background-color: #F9EDFF; 
         }
 
         .form-container {
-            max-width: 500px; /* Ajusta el ancho máximo del formulario */
-            width: 100%; /* Asegura que el formulario ocupe todo el ancho disponible */
+            max-width: 500px; 
+            width: 100%; 
         }
 
         .login-image {
             text-align: center;
-            margin: 20px 0; /* Espacio alrededor de la imagen */
+            margin: 20px 0; 
         }
 
         .login-image img {
-            max-width: 150px; /* Ajusta el tamaño máximo de la imagen */
-            height: auto; /* Ajusta la imagen para que se adapte al contenedor */
-            border-radius: 50%; /* Hace que la imagen sea circular */
-            border: 3px solid #fff; /* Agrega un borde blanco alrededor de la imagen */
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Agrega una sombra para darle efecto */
+            max-width: 150px; 
+            height: auto; 
+            border-radius: 50%; 
+            border: 3px solid #fff; 
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
         }
     </style>
 </head>
